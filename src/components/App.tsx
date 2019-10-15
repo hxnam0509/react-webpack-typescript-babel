@@ -2,10 +2,9 @@ import React from 'react';
 import { Counter } from './Counter';
 import { Hello } from './Hello';
 
-
 export const App = () => (
     <>
-        <Hello name={'react-webpack-typescript-babel'} />
+        <Hello name={'react-webpack-typescript-babel'} age={2}/>
         <Counter />
     </>
 );

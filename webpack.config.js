@@ -1,6 +1,7 @@
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 var ForkTsCheckerNotifierWebpackPlugin = require('fork-ts-checker-notifier-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CheckerPlugin } = require('awesome-typescript-loader')
 const path = require('path');
 const APP_PATH = path.resolve(__dirname, 'src');
 
@@ -24,29 +25,33 @@ module.exports = {
     module: {
         rules: [
             // { test: /\.(ts|js)x?$/, loader: 'babel-loader', exclude: /node_modules/ },
+            // {
+            //     test: /\.tsx?$/,
+            //     exclude: /node_modules/,
+            //     use: [
+            //         { loader: 'cache-loader' },
+            //         {
+            //             loader: 'thread-loader',
+            //             options: {
+            //                 // there should be 1 cpu for the fork-ts-checker-webpack-plugin
+            //                 workers: require('os').cpus().length - 1,
+            //                 poolTimeout: Infinity, // set this to Infinity in watch mode - see https://github.com/webpack-contrib/thread-loader
+            //             },
+            //         },
+            //         {
+            //             loader: 'ts-loader',
+            //             options: {
+            //                 // disable type checker - we will use it in fork plugin
+            //                 transpileOnly: true,
+            //                 happyPackMode: true,
+            //             },
+            //         },
+            //     ],
+            // },
             {
                 test: /\.tsx?$/,
-                exclude: /node_modules/,
-                use: [
-                    { loader: 'cache-loader' },
-                    {
-                        loader: 'thread-loader',
-                        options: {
-                            // there should be 1 cpu for the fork-ts-checker-webpack-plugin
-                            workers: require('os').cpus().length - 1,
-                            poolTimeout: Infinity, // set this to Infinity in watch mode - see https://github.com/webpack-contrib/thread-loader
-                        },
-                    },
-                    {
-                        loader: 'ts-loader',
-                        options: {
-                            // disable type checker - we will use it in fork plugin
-                            transpileOnly: true,
-                            happyPackMode: true,
-                        },
-                    },
-                ],
-            },
+                loader: 'awesome-typescript-loader',
+            }
         ],
     },
 
@@ -66,9 +71,6 @@ module.exports = {
             async: false,
             checkSyntacticErrors: true,
         }),
-        new ForkTsCheckerNotifierWebpackPlugin({
-            title: 'TypeScript',
-            alwaysNotify: true,
-        }),
+        new CheckerPlugin()
     ],
 };

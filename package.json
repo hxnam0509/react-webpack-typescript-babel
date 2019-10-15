@@ -20,6 +20,7 @@
     "@babel/preset-env": "7.6.2",
     "@babel/preset-react": "7.0.0",
     "@babel/preset-typescript": "7.6.0",
+    "awesome-typescript-loader": "^5.2.1",
     "babel-loader": "8.0.6",
     "cache-loader": "^4.1.0",
     "fork-ts-checker-notifier-webpack-plugin": "^1.0.2",
